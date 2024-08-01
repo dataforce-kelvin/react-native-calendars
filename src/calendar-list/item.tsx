@@ -1,5 +1,5 @@
 import XDate from 'xdate';
-import React, {useRef, useMemo, useCallback} from 'react';
+import React, {useMemo, useCallback} from 'react';
 import {Text} from 'react-native';
 import {Theme} from '../types';
 import {toMarkingFormat} from '../interface';
@@ -32,7 +32,7 @@ const CalendarListItem = React.memo((props: CalendarListItemProps) => {
     visible
   } = props;
 
-  const style = useRef(styleConstructor(theme));
+  const style = useMemo(() => styleConstructor(theme), [theme]);
   
   const calendarProps = extractCalendarProps(props);
   const dateString = toMarkingFormat(item);
@@ -43,14 +43,14 @@ const CalendarListItem = React.memo((props: CalendarListItemProps) => {
         width: calendarWidth,
         minHeight: calendarHeight
       }, 
-      style.current.calendar,
+      style.calendar,
       propsStyle
     ];
-  }, [calendarWidth, calendarHeight, propsStyle]);
+  }, [calendarWidth, calendarHeight, propsStyle, style]);
   
   const textStyle = useMemo(() => {
-    return [calendarStyle, style.current.placeholderText];
-  }, [calendarStyle]);
+    return [calendarStyle, style.placeholderText];
+  }, [calendarStyle, style]);
   
   const _onPressArrowLeft = useCallback((method: () => void, month?: XDate) => {
     const monthClone = month?.clone();

@@ -149,6 +149,11 @@ export default class Agenda extends Component<AgendaProps, State> {
     } else if (!prevProps.items) {
       this.loadReservations(this.props);
     }
+
+    if (prevProps.theme !== this.props.theme) {
+      this.style = styleConstructor(this.props.theme)
+      this.forceUpdate()
+    }
   }
 
   static getDerivedStateFromProps(nextProps: AgendaProps) {
@@ -348,6 +353,7 @@ export default class Agenda extends Component<AgendaProps, State> {
         selectedDay={this.state.selectedDay}
         topDay={this.state.topDay}
         onDayChange={this.onDayChange}
+        theme={this.props.theme}
       />
     );
   }

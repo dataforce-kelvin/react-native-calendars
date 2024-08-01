@@ -111,7 +111,7 @@ const CalendarList = (props: CalendarListProps & ContextProp, ref: any) => {
 
   const shouldUseAndroidRTLFix = useMemo(() => constants.isAndroidRTL && horizontal, [horizontal]);
 
-  const style = useRef(styleConstructor(theme));
+  const style = useMemo(() => styleConstructor(theme), [ theme ]);
   const list = useRef();
   const range = useRef(horizontal ? 1 : 3);
   const initialDate = useRef(parseDate(current) || new XDate());
@@ -127,12 +127,12 @@ const CalendarList = (props: CalendarListProps & ContextProp, ref: any) => {
   }, [pastScrollRange, futureScrollRange]);
 
   const staticHeaderStyle = useMemo(() => {
-    return [style.current.staticHeader, headerStyle];
-  }, [headerStyle]);
+    return [style.staticHeader, headerStyle];
+  }, [headerStyle, style]);
 
   const listStyle = useMemo(() => {
-    return [style.current.container, propsStyle];
-  }, [propsStyle]);
+    return [style.container, propsStyle];
+  }, [propsStyle, style]);
 
   const initialDateIndex = useMemo(() => {
     return findIndex(items, function(item) {
@@ -298,7 +298,7 @@ const CalendarList = (props: CalendarListProps & ContextProp, ref: any) => {
   ]);
 
   return (
-    <View style={style.current.flatListContainer} testID={testID}>
+    <View style={style.flatListContainer} testID={testID}>
       <FlatList
         // @ts-expect-error
         ref={list}

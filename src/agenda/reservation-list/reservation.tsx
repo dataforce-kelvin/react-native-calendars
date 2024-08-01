@@ -70,6 +70,10 @@ class Reservation extends Component<ReservationProps> {
         }
       }
     }
+
+    if (this.props.theme !== nextProps.theme)
+      changed = true
+
     return changed;
   }
 
